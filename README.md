@@ -1,2 +1,2 @@
-# HotelBooking_Clean_Async
- Async version of HotelBooking_Clean
+# HotelBooking_Project
+Mini Project Part 1
