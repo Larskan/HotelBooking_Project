@@ -17,7 +17,7 @@ namespace HotelBooking.Core
             this.roomRepository = roomRepository;
         }
 
- 
+
         public async Task<bool> CreateBooking(Booking booking)
         {
             int roomId = await FindAvailableRoom(booking.StartDate, booking.EndDate); //ignore or mock somehow
@@ -34,7 +34,7 @@ namespace HotelBooking.Core
                 return false;
             }
         }
-     
+
         public async Task<int> FindAvailableRoom(DateTime startDate, DateTime endDate)
         {
             if (startDate <= DateTime.Today || startDate >= endDate)
