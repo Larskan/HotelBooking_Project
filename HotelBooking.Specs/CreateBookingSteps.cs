@@ -3,10 +3,10 @@ using HotelBooking.Core;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
+//using TechTalk.SpecFlow;
 
 namespace HotelBooking.Specs
 {
@@ -21,6 +21,8 @@ namespace HotelBooking.Specs
         private readonly ScenarioContext _scenarioContext;
         private Booking booking;
         private bool result;
+        private List<Room> rooms;
+        #endregion
 
         public CreateBookingSteps(ScenarioContext scenarioContext, ITestOutputHelper outputHelper)
         {
@@ -30,12 +32,11 @@ namespace HotelBooking.Specs
             mockRoomRepository = new Mock<IRepository<Room>>();
             bookingManager = new BookingManager(mockBookingRepository.Object, mockRoomRepository.Object);
         }
-        #endregion
 
-        [Given(@"is a hotel which have in total (.*) rooms")]
-        public void GivenIsAHotelWhichHaveInTotalRooms(int totalRooms)
+        [Given(@"a hotel with (.*) available rooms")]
+        public void GivenAHotelWithAvailableRooms(int totalRooms)
         {
-            var rooms = new List<Room>();
+            rooms = new List<Room>();
             for (int i = 1; i <= totalRooms; i++)
             {
                 rooms.Add(new Room { Id = i });
@@ -43,28 +44,63 @@ namespace HotelBooking.Specs
             mockRoomRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(rooms);
         }
 
+        [Given(@"the booking start date is ""(.*)"" and the end date is ""(.*)""")]
+        public void GivenTheBookingDates(int startDateDays, int endDateDays)
+        {
+            DateTime startDate = DateTime.Today.AddDays(startDateDays);
+            DateTime endDate = DateTime.Today.AddDays(endDateDays);
+            booking = new Booking
+            {
+                StartDate = startDate,
+                EndDate = endDate,
+                IsActive = false
+            };
+        }
+
         [When(@"a user books a room")]
         public async Task WhenAUserBooksARoom()
         {
-            booking = new Booking
+            try
             {
-                StartDate = DateTime.Today.AddDays(1),
-                EndDate = DateTime.Today.AddDays(2),
-                IsActive = false
-            };
-            result = await bookingManager.CreateBooking(booking);
+                result = await bookingManager.CreateBooking(booking);
+                // If no exception, store result as usual.
+                _scenarioContext["Exception"] = null;
+            }
+            catch (ArgumentException ex)
+            {
+                // Store the exception message for verification.
+                _scenarioContext["Exception"] = ex;
+                result = false;
+            }
         }
 
-        [Then(@"check if a room from (.*) to (.*) is available")]
-        public void ThenCheckIfARoomFromToIsAvailable(int startOffset, int endOffset)
+        [Then(@"the booking should be created successfully")]
+        public void ThenTheBookingShouldBeCreatedSuccessfully()
         {
-            DateTime startDate = DateTime.Today.AddDays(startOffset);
-            DateTime endDate = DateTime.Today.AddDays(endOffset);
-
             Assert.True(result);
-            Assert.Equal(startDate, booking.StartDate);
-            Assert.Equal(endDate, booking.EndDate);
             Assert.True(booking.IsActive);
+        }
+
+        [Then(@"the booking should not be created")]
+        public void ThenTheBookingShouldNotBeCreated()
+        {
+            Assert.False(result);
+            // Optionally, also assert that booking remains inactive.
+            Assert.False(booking.IsActive);
+        }
+
+        [Then(@"the assigned room id should be between (.*) and (.*)")]
+        public void ThenTheAssignedRoomIdShouldBeBetween(int minRoomId, int maxRoomId)
+        {
+            Assert.InRange(booking.RoomId, minRoomId, maxRoomId);
+        }
+
+        [Then(@"an exception should be thrown indicating (.*)")]
+        public void ThenAnExceptionShouldBeThrownIndicating(string expectedMessageFragment)
+        {
+            var ex = _scenarioContext["Exception"] as ArgumentException;
+            Assert.NotNull(ex);
+            Assert.Contains(expectedMessageFragment, ex.Message);
         }
     }
 }

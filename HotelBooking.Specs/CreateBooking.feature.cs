@@ -19,22 +19,22 @@ namespace HotelBooking.Specs
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class HotelBookingCreatingAHotelFeature : object, Xunit.IClassFixture<HotelBookingCreatingAHotelFeature.FixtureData>, Xunit.IAsyncLifetime
+    public partial class HotelBookingCreationFeature : object, Xunit.IClassFixture<HotelBookingCreationFeature.FixtureData>, Xunit.IAsyncLifetime
     {
         
         private global::Reqnroll.ITestRunner testRunner;
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "", "Hotel booking creating a hotel", "    This feature is to check if the booking works as expected when different cond" +
-                "ition are given ", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "", "Hotel booking creation", "  This feature tests the booking creation functionality under various conditions." +
+                "", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
 #line 1 "CreateBooking.feature"
 #line hidden
         
-        public HotelBookingCreatingAHotelFeature(HotelBookingCreatingAHotelFeature.FixtureData fixtureData, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public HotelBookingCreationFeature(HotelBookingCreationFeature.FixtureData fixtureData, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
         }
@@ -93,16 +93,16 @@ namespace HotelBooking.Specs
             await this.TestTearDownAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="check if there is a available room")]
-        [Xunit.TraitAttribute("FeatureTitle", "Hotel booking creating a hotel")]
-        [Xunit.TraitAttribute("Description", "check if there is a available room")]
-        public async System.Threading.Tasks.Task CheckIfThereIsAAvailableRoom()
+        [Xunit.SkippableFactAttribute(DisplayName="Valid booking with available room")]
+        [Xunit.TraitAttribute("FeatureTitle", "Hotel booking creation")]
+        [Xunit.TraitAttribute("Description", "Valid booking with available room")]
+        public async System.Threading.Tasks.Task ValidBookingWithAvailableRoom()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("check if there is a available room", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 5
-this.ScenarioInitialize(scenarioInfo);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Valid booking with available room", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 18
+  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -111,14 +111,195 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
-    await testRunner.GivenAsync("is a hotel which have in total 2 rooms", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 19
+    await testRunner.GivenAsync("a hotel with 2 available rooms", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 7
+#line 20
+    await testRunner.AndAsync("the booking start date is \"1\" and the end date is \"2\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 21
     await testRunner.WhenAsync("a user books a room", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 8
-    await testRunner.ThenAsync("check if a room from 1 to 2 is available", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 22
+    await testRunner.ThenAsync("the booking should be created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 23
+    await testRunner.AndAsync("the assigned room id should be between 1 and 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Booking fails when no rooms are available")]
+        [Xunit.TraitAttribute("FeatureTitle", "Hotel booking creation")]
+        [Xunit.TraitAttribute("Description", "Booking fails when no rooms are available")]
+        public async System.Threading.Tasks.Task BookingFailsWhenNoRoomsAreAvailable()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Booking fails when no rooms are available", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 26
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 27
+    await testRunner.GivenAsync("a hotel with 0 available rooms", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 28
+    await testRunner.AndAsync("the booking start date is \"1\" and the end date is \"2\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 29
+    await testRunner.WhenAsync("a user books a room", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 30
+    await testRunner.ThenAsync("the booking should not be created", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Booking fails when Start date is today or earlier")]
+        [Xunit.TraitAttribute("FeatureTitle", "Hotel booking creation")]
+        [Xunit.TraitAttribute("Description", "Booking fails when Start date is today or earlier")]
+        public async System.Threading.Tasks.Task BookingFailsWhenStartDateIsTodayOrEarlier()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Booking fails when Start date is today or earlier", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 33
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 34
+    await testRunner.GivenAsync("a hotel with 2 available rooms", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 35
+    await testRunner.AndAsync("the booking start date is \"0\" and the end date is \"2\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 36
+    await testRunner.WhenAsync("a user books a room", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 37
+    await testRunner.ThenAsync("an exception should be thrown indicating The start date cannot be in the past or " +
+                        "later than the end date.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Booking at the earliest acceptable start date")]
+        [Xunit.TraitAttribute("FeatureTitle", "Hotel booking creation")]
+        [Xunit.TraitAttribute("Description", "Booking at the earliest acceptable start date")]
+        public async System.Threading.Tasks.Task BookingAtTheEarliestAcceptableStartDate()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Booking at the earliest acceptable start date", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 40
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 41
+    await testRunner.GivenAsync("a hotel with 2 available rooms", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 42
+    await testRunner.AndAsync("the booking start date is \"1\" and the end date is \"2\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 43
+    await testRunner.WhenAsync("a user books a room", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 44
+    await testRunner.ThenAsync("the booking should be created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 45
+    await testRunner.AndAsync("the assigned room id should be between 1 and 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Booking fails when start date is after end date")]
+        [Xunit.TraitAttribute("FeatureTitle", "Hotel booking creation")]
+        [Xunit.TraitAttribute("Description", "Booking fails when start date is after end date")]
+        public async System.Threading.Tasks.Task BookingFailsWhenStartDateIsAfterEndDate()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Booking fails when start date is after end date", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 48
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 49
+    await testRunner.GivenAsync("a hotel with 2 available rooms", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 50
+    await testRunner.AndAsync("the booking start date is \"3\" and the end date is \"2\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 51
+    await testRunner.WhenAsync("a user books a room", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 52
+    await testRunner.ThenAsync("an exception should be thrown indicating The start date cannot be in the past or " +
+                        "later than the end date.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Booking with zero-day duration")]
+        [Xunit.TraitAttribute("FeatureTitle", "Hotel booking creation")]
+        [Xunit.TraitAttribute("Description", "Booking with zero-day duration")]
+        public async System.Threading.Tasks.Task BookingWithZero_DayDuration()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Booking with zero-day duration", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 55
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 56
+    await testRunner.GivenAsync("a hotel with 2 available rooms", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 57
+    await testRunner.AndAsync("the booking start date is \"1\" and the end date is \"1\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 58
+    await testRunner.WhenAsync("a user books a room", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 59
+    await testRunner.ThenAsync("the booking should not be created", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -131,12 +312,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             async System.Threading.Tasks.Task Xunit.IAsyncLifetime.InitializeAsync()
             {
-                await HotelBookingCreatingAHotelFeature.FeatureSetupAsync();
+                await HotelBookingCreationFeature.FeatureSetupAsync();
             }
             
             async System.Threading.Tasks.Task Xunit.IAsyncLifetime.DisposeAsync()
             {
-                await HotelBookingCreatingAHotelFeature.FeatureTearDownAsync();
+                await HotelBookingCreationFeature.FeatureTearDownAsync();
             }
         }
     }
