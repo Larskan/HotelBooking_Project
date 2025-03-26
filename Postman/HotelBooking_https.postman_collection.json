@@ -1,0 +1,545 @@
+{
+	"info": {
+		"_postman_id": "27d7dabf-e1de-4c63-ac0e-83118616e301",
+		"name": "HotelBooking_https",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43461822",
+		"_collection_link": "https://niels-2579828.postman.co/workspace/Niels's-Workspace~42bb2165-c09d-4acc-8d9a-814cb5b2ee3c/collection/43461822-27d7dabf-e1de-4c63-ac0e-83118616e301?action=share&source=collection_link&creator=43461822"
+	},
+	"item": [
+		{
+			"name": "rooms - Room 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"Room 1\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:5001/rooms",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"rooms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "rooms - Room 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"Room 2\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:5001/rooms",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"rooms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "rooms",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is json\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"//pm.test(\"Response length is correct\", function () {",
+							"//    var jsonData = pm.response.json();",
+							"//    pm.expect(jsonData.length).to.eql(2);",
+							"//});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/rooms",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"rooms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "rooms/0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response is json\", function () {",
+							"    pm.response.to.be.badRequest;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/rooms/0",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"rooms",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "rooms/2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is json\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response has correct room id\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(2);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/rooms/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"rooms",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bookings Available Rooms",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Get today's date and time\r",
+							"let startDate = new Date();\r",
+							"let endDate = new Date(startDate); // Clone to avoid modifying original\r",
+							"\r",
+							"// Add 2 days to end date\r",
+							"endDate.setDate(endDate.getDate() + 2);\r",
+							"\r",
+							"// Convert to ISO format with time (YYYY-MM-DDTHH:mm:ss.sssZ)\r",
+							"let formattedStartDate = startDate.toISOString();\r",
+							"let formattedEndDate = endDate.toISOString();\r",
+							"\r",
+							"// Set global variables in Postman\r",
+							"pm.globals.set(\"startDate\", formattedStartDate);\r",
+							"pm.globals.set(\"endDate\", formattedEndDate);\r",
+							"\r",
+							"// Log for debugging\r",
+							"console.log(\"Start Date:\", formattedStartDate);\r",
+							"console.log(\"End Date:\", formattedEndDate);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: \"https://localhost:5001/Bookings\",\r",
+							"    method: \"GET\"\r",
+							"}, function (err, response) {\r",
+							"    if (err) {\r",
+							"        console.error(err);\r",
+							"    } else {\r",
+							"        let responseData = response.json();\r",
+							"\r",
+							"        if (Array.isArray(responseData) && responseData.length > 0) {\r",
+							"            let lastObject = responseData[responseData.length - 1];\r",
+							"\r",
+							"            console.log(\"Last Booking:\", lastObject);\r",
+							"            console.log(\"Global Start Date:\", pm.globals.get(\"startDate\"));\r",
+							"            console.log(\"Global End Date:\", pm.globals.get(\"endDate\"));\r",
+							"\r",
+							"            pm.test(\"Last booking startDate matches global startDate\", function () {\r",
+							"                pm.expect(lastObject.startDate).to.equal(pm.globals.get(\"startDate\"));\r",
+							"            });\r",
+							"\r",
+							"            pm.test(\"Last booking endDate matches global endDate\", function () {\r",
+							"                pm.expect(lastObject.endDate).to.equal(pm.globals.get(\"endDate\"));\r",
+							"            });\r",
+							"        }\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"startDate\": \"{{startDate}}\",\n  \"endDate\": \"{{endDate}}\",\n  \"customerId\": \"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/Bookings",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"Bookings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Booking Failed Test EndDate < StartDate",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Get today's date and time\r",
+							"let startDate = new Date();\r",
+							"let endDate = new Date(startDate); // Clone to avoid modifying original\r",
+							"\r",
+							"// Add 2 days to end date\r",
+							"startDate.setDate(startDate.getDate - 7)\r",
+							"endDate.setDate(endDate.getDate() - 3);\r",
+							"\r",
+							"// Convert to ISO format with time (YYYY-MM-DDTHH:mm:ss.sssZ)\r",
+							"let formattedStartDate = startDate.toISOString();\r",
+							"let formattedEndDate = endDate.toISOString();\r",
+							"\r",
+							"// Set global variables in Postman\r",
+							"pm.globals.set(\"startDate\", formattedStartDate);\r",
+							"pm.globals.set(\"endDate\", formattedEndDate);\r",
+							"\r",
+							"// Log for debugging\r",
+							"console.log(\"Start Date:\", formattedStartDate);\r",
+							"console.log(\"End Date:\", formattedEndDate);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"startDate\": \"{{startDate}}\",\r\n  \"endDate\": \"{{endDate}}\",\r\n  \"customerId\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/Bookings",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"Bookings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Booking Failed Rooms Already Booked",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Get today's date and time\r",
+							"let startDate = new Date();\r",
+							"let endDate = new Date(startDate); // Clone to avoid modifying original\r",
+							"\r",
+							"// Add 2 days to end date\r",
+							"endDate.setDate(endDate.getDate() + 5);\r",
+							"endDate.setDate(endDate.getDate() + 13);\r",
+							"\r",
+							"// Convert to ISO format with time (YYYY-MM-DDTHH:mm:ss.sssZ)\r",
+							"let formattedStartDate = startDate.toISOString();\r",
+							"let formattedEndDate = endDate.toISOString();\r",
+							"\r",
+							"// Set global variables in Postman\r",
+							"pm.globals.set(\"startDate\", formattedStartDate);\r",
+							"pm.globals.set(\"endDate\", formattedEndDate);\r",
+							"\r",
+							"// Log for debugging\r",
+							"console.log(\"Start Date:\", formattedStartDate);\r",
+							"console.log(\"End Date:\", formattedEndDate);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {\r",
+							"    pm.response.to.have.status(409);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"startDate\": \"{{startDate}}\",\r\n  \"endDate\": \"{{endDate}}\",\r\n  \"customerId\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/Bookings",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"Bookings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Booking Failed Rooms Already Booked StartDate Not EndDate",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Get today's date and time\r",
+							"let startDate = new Date();\r",
+							"let endDate = new Date(startDate); // Clone to avoid modifying original\r",
+							"\r",
+							"// Add 2 days to end date\r",
+							"endDate.setDate(endDate.getDate() + 10);\r",
+							"endDate.setDate(endDate.getDate() + 20);\r",
+							"\r",
+							"// Convert to ISO format with time (YYYY-MM-DDTHH:mm:ss.sssZ)\r",
+							"let formattedStartDate = startDate.toISOString();\r",
+							"let formattedEndDate = endDate.toISOString();\r",
+							"\r",
+							"// Set global variables in Postman\r",
+							"pm.globals.set(\"startDate\", formattedStartDate);\r",
+							"pm.globals.set(\"endDate\", formattedEndDate);\r",
+							"\r",
+							"// Log for debugging\r",
+							"console.log(\"Start Date:\", formattedStartDate);\r",
+							"console.log(\"End Date:\", formattedEndDate);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {\r",
+							"    pm.response.to.have.status(409);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"startDate\": \"{{startDate}}\",\r\n  \"endDate\": \"{{endDate}}\",\r\n  \"customerId\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/Bookings",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"Bookings"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
