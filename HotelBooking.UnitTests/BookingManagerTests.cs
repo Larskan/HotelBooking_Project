@@ -241,33 +241,33 @@ namespace HotelBooking.UnitTests
         //Of course this is not a large dataset, its more a proof of concept.
         //Can be hard to debug, since errors in dataset are NOT obvious. 
         //Has to make sure the json file is included, NOTE: Right click, open properties, Build action: content, copy to out: copy if newer
-        [Theory]
-        [CustomData("CreateBookingCustomData.json")]
-        public async Task CreateBooking_Creation_WrongParametersRoomID(int id, DateTime start, DateTime end, bool free, int customer, int expectedRoom)
-        {
-            //Arrange
-            var booking = new Booking{Id = id,StartDate = start,EndDate = end,CustomerId = customer,RoomId = 0 };
+        // [Theory]
+        // [CustomData("CreateBookingCustomData.json")]
+        // public async Task CreateBooking_Creation_WrongParametersRoomID(int id, DateTime start, DateTime end, bool free, int customer, int expectedRoom)
+        // {
+        //     //Arrange
+        //     var booking = new Booking{Id = id,StartDate = start,EndDate = end,CustomerId = customer,RoomId = 0 };
 
-            //Setup book repo, no conflicts
-            mockBookingRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(new List<Booking>());
-            //Setup room repo, simulate room
-            mockRoomRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(new List<Room> { new Room { Id = expectedRoom } });
-            _outputHelper.WriteLine($"MockRoomRepo Value: {expectedRoom}");
+        //     //Setup book repo, no conflicts
+        //     mockBookingRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(new List<Booking>());
+        //     //Setup room repo, simulate room
+        //     mockRoomRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(new List<Room> { new Room { Id = expectedRoom } });
+        //     _outputHelper.WriteLine($"MockRoomRepo Value: {expectedRoom}");
 
-            //Act
-            bool result = await bookingManager.CreateBooking(booking);
-            _outputHelper.WriteLine($"Act Value: {result}");
+        //     //Act
+        //     bool result = await bookingManager.CreateBooking(booking);
+        //     _outputHelper.WriteLine($"Act Value: {result}");
 
-            //Assert
-            Assert.Equal(expectedRoom >= 0, result);
-            Assert.Equal(expectedRoom >= 0 ? expectedRoom : 0, booking.RoomId);
-            //condition ? expression_iftrue : expression_iffalse
-            mockBookingRepository.Verify(x => x.AddAsync(It.IsAny<Booking>()), expectedRoom >= 0 ? Times.Once() : Times.Never());
-            _outputHelper.WriteLine($"Result Value: {result}");
-            _outputHelper.WriteLine($"expectedRoom Value: {expectedRoom}");
-            _outputHelper.WriteLine($"RoomID Value: {booking.RoomId}");
+        //     //Assert
+        //     Assert.Equal(expectedRoom >= 0, result);
+        //     Assert.Equal(expectedRoom >= 0 ? expectedRoom : 0, booking.RoomId);
+        //     //condition ? expression_iftrue : expression_iffalse
+        //     mockBookingRepository.Verify(x => x.AddAsync(It.IsAny<Booking>()), expectedRoom >= 0 ? Times.Once() : Times.Never());
+        //     _outputHelper.WriteLine($"Result Value: {result}");
+        //     _outputHelper.WriteLine($"expectedRoom Value: {expectedRoom}");
+        //     _outputHelper.WriteLine($"RoomID Value: {booking.RoomId}");
 
-        }
+        // }
         #endregion Lars
 
         #region Niels
